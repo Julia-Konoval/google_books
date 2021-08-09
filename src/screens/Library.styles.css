@@ -1,0 +1,32 @@
+.container {
+width: 100%;
+height: 100%;
+justify-content: center;
+align-items: center;
+display: flex;
+}
+.booksearch-container {
+justify-content: center;
+align-items: center;
+display: flex;
+flex-direction: column;
+}
+#title {
+font-family: 'Anton', sans-serif;
+font-size: 64px;
+margin-bottom: 0;
+color: orangered;
+}
+.button {
+background-color: #02a515; /* Green */
+border: none;
+color: white;
+padding: 15px 52px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+}
+.library-img {
+    margin-top: 0;
+}
