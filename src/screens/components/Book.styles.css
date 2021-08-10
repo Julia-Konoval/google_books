@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.bookCard {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+#bookTitle {
+    font-family: 'Anton', sans-serif;
+    margin-top: 10; 
+    margin-bottom: 0;
+}
+#authors {
+    margin-bottom: 0;
+    margin-top: 3; 
+    font-style: italic;
+}
