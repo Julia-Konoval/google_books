@@ -7,11 +7,11 @@ import Book from './components/Book.component.tsx'
 const Library = () => {
 const key = 'AIzaSyC4hmFXxCHutRL--GW4gP0Th9rv_xPiM38'
 const [books, setBooks] = useState([]);
-
+const [searchedField, setSearchedField] = useState('');
 
 async function fetchData () {
   const response = await axios.get(
-    "https://www.googleapis.com/books/v1/volumes?q=harry+potter"
+    `https://www.googleapis.com/books/v1/volumes?q=`+ searchedField
   )
   console.log(response.data)
     if(response.status === 200) {
@@ -20,11 +20,18 @@ async function fetchData () {
 }
 console.log('data', books)
 
+const handleChange = (event) => {  
+  const book = event.target.value.replace(/\s/g, '+');  
+  setSearchedField(book);  
+  console.log("new book", book)
+}  
+
 return(
   <div className='container'>
     <div className='booksearch-container'>
     <p id='title'>Books</p>
     <img className='library-img' src={libraryIMG} alt='library' />
+    <input placeholder="Type here..." className="book_input_search" type="text" onChange={handleChange} />
     <button className='button' onClick={fetchData}>Search books</button>
     </div>
     <div className='bookRow'>
