@@ -1,29 +1,33 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import './Library.styles.css'
 import libraryIMG from '../images/library.svg'
 import Book from './components/Book.component.tsx'
+import { connect } from 'react-redux'
+import { fetchBooks } from '../actions/postActions'
 
 const Library = () => {
 const key = 'AIzaSyC4hmFXxCHutRL--GW4gP0Th9rv_xPiM38'
-const [books, setBooks] = useState([]);
-const [searchedField, setSearchedField] = useState('');
+// const [books, setBooks] = useState([]);
+// const [searchedField, setSearchedField] = useState('');
+// const [top, setTop] = useState(0)
 
-async function fetchData () {
-  const response = await axios.get(
-    `https://www.googleapis.com/books/v1/volumes?q=`+ searchedField
-  )
-  console.log(response.data)
-    if(response.status === 200) {
-        setBooks(response.data.items)  
-    } else throw new Error (response.status)
-}
-console.log('data', books)
+// async function fetchData () {
+//   const response = await axios.get(
+//     `https://www.googleapis.com/books/v1/volumes?q=`+ searchedField
+//   )
+//   console.log(response.data)
+//     if(response.status === 200) {
+//         setBooks(response.data.items)  
+//     } else throw new Error (response.status)
+// }
+// console.log('data', books)
+useEffect(() => {
+  fetchBooks()
+})
 
 const handleChange = (event) => {  
   const book = event.target.value.replace(/\s/g, '+');  
   setSearchedField(book);  
-  console.log("new book", book)
 }  
 
 return(
@@ -43,4 +47,4 @@ return(
 )
 }
 
-export default Library
+export default connect(null, {fetchBooks})(Library) 
