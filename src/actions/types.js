@@ -1,2 +1,0 @@
-export const FETCH_BOOKS = 'FETCH_BOOKS'
-export const SEARCHED_FIELD = 'SEARCHED_FIELD'

@@ -1,50 +1,53 @@
-import React, { useState } from 'react'
-import './Library.styles.css'
-import libraryIMG from '../images/library.svg'
-import Book from './components/Book.component.tsx'
-import { connect } from 'react-redux'
-import { fetchBooks } from '../actions/postActions'
+import React, { useState } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 
-const Library = () => {
-const key = 'AIzaSyC4hmFXxCHutRL--GW4gP0Th9rv_xPiM38'
-// const [books, setBooks] = useState([]);
-// const [searchedField, setSearchedField] = useState('');
-// const [top, setTop] = useState(0)
+import "./Library.styles.css";
+import libraryIMG from "../images/library.svg";
+import { LOAD_BOOKS } from "../redux/actions/actionTypes";
+import Book from "./components/Book.component";
 
-// async function fetchData () {
-//   const response = await axios.get(
-//     `https://www.googleapis.com/books/v1/volumes?q=`+ searchedField
-//   )
-//   console.log(response.data)
-//     if(response.status === 200) {
-//         setBooks(response.data.items)  
-//     } else throw new Error (response.status)
-// }
-// console.log('data', books)
-useEffect(() => {
-  fetchBooks()
-})
+const Library = connect(
+  null,
+  null
+)(() => {
+  const dispatch = useDispatch();
+  const books = useSelector((state) => state.appReducer.books);
 
-const handleChange = (event) => {  
-  const book = event.target.value.replace(/\s/g, '+');  
-  setSearchedField(book);  
-}  
+  const [searchedField, setSearchedField] = useState("");
 
-return(
-  <div className='container'>
-    <div className='booksearch-container'>
-    <p id='title'>Books</p>
-    <img className='library-img' src={libraryIMG} alt='library' />
-    <input placeholder="Type here..." className="book_input_search" type="text" onChange={handleChange} />
-    <button className='button' onClick={fetchData}>Search books</button>
+  const handleChange = (text) => {
+    setSearchedField(text.target.value);
+  };
+
+  return (
+    <div className="container">
+      <div className="booksearch-container">
+        <p id="title">Books</p>
+        <img className="library-img" src={libraryIMG} alt="library" />
+        <input
+          value={searchedField}
+          onChange={handleChange}
+          placeholder="Type here..."
+          className="book_input_search"
+          type="search"
+        />
+        <button
+          className="button"
+          onClick={() => {
+            dispatch({
+              type: LOAD_BOOKS,
+              payload: searchedField,
+            });
+          }}
+        >
+          Search books
+        </button>
+      </div>
+      <div className="bookRow">
+        {books.length > 0 &&
+          books.map((book) => <Book {...{ book }} key={`book${book.id}`} />)}
+      </div>
     </div>
-    <div className='bookRow'>
-    {books.length > 0 && books.map((book) => (
-      <Book {...{book}} key={`book${book.id}`}/>
-    ))}
-    </div>
-  </div>
-)
-}
-
-export default connect(null, {fetchBooks})(Library) 
+  );
+});
+export default Library;
